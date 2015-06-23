@@ -421,7 +421,7 @@ var resizePizzas = function(size) {
   }
 
   changeSliderLabel(size);
-
+  var newWidth;
 // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
     switch(size) {
@@ -437,9 +437,9 @@ var resizePizzas = function(size) {
       default:
         console.log('bug in sizeSwitcher');
     }
-    
-    var pizzaLength = randomPizzas.length;
+
     var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
+    var pizzaLength = randomPizzas.length;
     for (var i = 0; i < pizzaLength; i++) {
       randomPizzas[i].style.width = newWidth + "%";
     }
@@ -491,8 +491,12 @@ function updatePositions() {
   window.performance.mark("mark_start_frame");
 
   var items = document.getElementsByClassName('mover');
-  var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-  for (var i = 0; i < items.length; i++) {
+  var top = document.body.scrollTop / 1250;
+  var phase;
+  
+  var itemsLength = items.length;
+  for (var i = 0; i < itemsLength; i++) {
+    phase = Math.sin(top + i % 5);
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
@@ -522,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.getElementbyId("movingPizzas1").appendChild(elem);
+    document.getElementById("movingPizzas1").appendChild(elem);
   }
   updatePositions();
 });
